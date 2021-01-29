@@ -11,6 +11,7 @@
         rel="stylesheet">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 
 <body>
@@ -58,10 +59,10 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="fst-cls-ticket" class="inp-style inp-width" type="number" value="0">
                 </div>
                 <div class="plus-minus-btn">
-                    <p>+ -</p>
+                    <p> <button id="fst-ticket-plus" class="button">+</button> <button class="button">-</button> </p>
                 </div>
             </div>
             
@@ -71,7 +72,7 @@
                     <input class="inp-style inp-width" type="number" name="">
                 </div>
                 <div class="plus-minus-btn">
-                    <p> <span>+</span> <span>-</span> </p>
+                    <p> <button class="button">+</button> <button class="button">-</button> </p>
                 </div>
             </div>
             <div class="calculations">
@@ -104,8 +105,16 @@
             </div>
             <button class="btn-style">Book Now</button>
         </div>
+        <script>
+            document.getElementById("fst-ticket-plus").addEventListener("click", function(){
+                const fstClsInput = document.getElementById("fst-cls-ticket");
+                const fstTicketCount = parseInt(fstClsInput.value);
+                const TotalfstTicket = fstTicketCount + 1;
+                fstClsInput.value = TotalfstTicket;
+            })
+        </script>
     </main>
-
+    <link rel="stylesheet" href="js/bootstrap.min.js">
     <!--Thank You-->
 </body>
 
