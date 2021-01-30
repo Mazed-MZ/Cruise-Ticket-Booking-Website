@@ -28,13 +28,16 @@
     </header>
 
     <!--Booking Section-->
-    <main class="main-content container">
+    <main id="main-div" class="main-content container">
 
         <div class="booking-content">
             <h1>Cruise Queen</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                scrambled it to make a type specimen book./p>
+            <h3>
+                It is an exclusive cruise journey. Being a part of our cruise traveller you would be travel more than 3
+                country within 1 month. Well decorated cabin, shopping-mall, playground, movie theatre, swimming pull
+                also many more facilities will be provide you in this journey of Cruise Queen. Get ready to your ocean
+                travel.
+            </h3>
         </div>
 
 
@@ -64,7 +67,8 @@
                     <input id="First-class-ticket" class="inp-style inp-width" type="number" value="0">
                 </div>
                 <div class="plus-minus-btn">
-                    <p> <button onclick="handleTicketListing('First-class', true)" class="button">+</button> <button onclick="handleTicketListing('First-class', false)" class="button">-</button> </p>
+                    <p> <button onclick="handleTicketListing('First-class', true)" class="button">+</button> <button
+                            onclick="handleTicketListing('First-class', false)" class="button">-</button> </p>
                 </div>
             </div>
 
@@ -74,7 +78,8 @@
                     <input id="Economy-class-ticket" class="inp-style inp-width" type="number" value="0">
                 </div>
                 <div class="plus-minus-btn">
-                    <p> <button onclick="handleTicketListing('Economy-class', true)" class="button">+</button> <button onclick="handleTicketListing('Economy-class', false)" class="button">-</button> </p>
+                    <p> <button onclick="handleTicketListing('Economy-class', true)" class="button">+</button> <button
+                            onclick="handleTicketListing('Economy-class', false)" class="button">-</button> </p>
                 </div>
             </div>
             <div class="calculations">
@@ -105,54 +110,80 @@
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button id="submit-btn" class="btn-style">Book Now</button>
         </div>
-        <script>
-            
-            // --- First Class & Economy Class Ticket Listing ---
-            function handleTicketListing(classCatagory, isIncrease) {
-                const ticketInput = document.getElementById(classCatagory + "-ticket");
-                const ticketCount = parseInt(ticketInput.value);
-                let totalTicket = ticketCount;
-                // for increase tickets number
-                if (isIncrease == true) {
-                    totalTicket = ticketCount + 1;
-                }
-                // for decrease ticket number
-                if (isIncrease == false && ticketCount > 0) {
-                    totalTicket = ticketCount - 1;
-                }
-                ticketInput.value = totalTicket;
-                
-                totalTicketPricing();
-            };
-
-            // --- Total Ticket Pricing ---
-            function totalTicketPricing(){
-                const fstClsCount = ticketInputValue("First-class"); /*using return function*/
-                const economyClsCount = ticketInputValue("Economy-class"); /*using return function*/
-
-                // calculate subtotal (including only First class and Economy class ticket price)
-                const subTotal = fstClsCount * 150 + economyClsCount * 100;
-                document.getElementById("subtotal").innerText = subTotal;
-
-                // Calculation of 10% VAT on the subtotal amount. Which will be added also
-                const totalVat = subTotal / 10;
-                document.getElementById("vat").innerText = totalVat;
-
-                // Calculation of Total amount.( adding subtotal and 10% VAT )
-                const totalPrice = subTotal + totalVat;
-                document.getElementById("total").innerText = totalPrice;
-            };
-
-            // --- Return Function ---
-            function ticketInputValue(classCatagory){
-                const ticketInput = document.getElementById(classCatagory + "-ticket");
-                const ticketCount = parseInt(ticketInput.value);
-                return ticketCount;
-            };
-        </script>
     </main>
+    <section id="welcome-msg">
+        <div>
+            <h1>Welcome to Cruise Queen</h1>
+            <h3>Your booking is on process...
+                <div class="spinner-border text-warning" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+            </h3>
+            <p>After ending all process you will get a confermation email</p>
+        </div>
+    </section>
+    <script>
+        // _______First Class & Economy Class Ticket Listing_______
+
+        function handleTicketListing(classCatagory, isIncrease) {
+            const ticketInput = document.getElementById(classCatagory + "-ticket");
+            const ticketCount = parseInt(ticketInput.value);
+            let totalTicket = ticketCount;
+            // for increase tickets number
+            if (isIncrease == true) {
+                totalTicket = ticketCount + 1;
+            }
+            // for decrease ticket number
+            if (isIncrease == false && ticketCount > 0) {
+                totalTicket = ticketCount - 1;
+            }
+            ticketInput.value = totalTicket;
+
+            totalTicketPricing();
+        };
+
+
+        // __________Total Ticket Pricing__________
+
+        function totalTicketPricing() {
+            const fstClsCount = ticketInputValue("First-class"); /*using return function*/
+            const economyClsCount = ticketInputValue("Economy-class"); /*using return function*/
+
+            // calculate subtotal (including only First class and Economy class ticket price)
+            const subTotal = fstClsCount * 150 + economyClsCount * 100;
+            document.getElementById("subtotal").innerText = subTotal;
+
+            // Calculation of 10% VAT on the subtotal amount. Which will be added also
+            const totalVat = subTotal * 0.1;
+            document.getElementById("vat").innerText = totalVat;
+
+            // Calculation of Total amount.( adding subtotal and 10% VAT )
+            const totalPrice = subTotal + totalVat;
+            document.getElementById("total").innerText = totalPrice;
+        };
+
+
+        // _______Book Now button_______
+        document.getElementById("submit-btn").addEventListener("click", function () {
+            const home = document.getElementById("main-div");
+            home.style.display = "none";
+            const sectionDiv = document.getElementById("welcome-msg");
+            sectionDiv.style.display = "block";
+        })
+
+
+
+
+        // _______Return Function_______
+
+        function ticketInputValue(classCatagory) {
+            const ticketInput = document.getElementById(classCatagory + "-ticket");
+            const ticketCount = parseInt(ticketInput.value);
+            return ticketCount;
+        };
+    </script>
     <link rel="stylesheet" href="js/bootstrap.min.js">
     <!--Thank You-->
 </body>
