@@ -32,7 +32,9 @@
 
         <div class="booking-content">
             <h1>Cruise Queen</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book./p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                scrambled it to make a type specimen book./p>
         </div>
 
 
@@ -49,7 +51,7 @@
             <div class="inputs">
                 <div class="input-group">
                     <label" for="">Departure</label>
-                    <input class="inp-style" type="date" name="">
+                        <input class="inp-style" type="date" name="">
                 </div>
                 <div class="input-group">
                     <label for="">Return</label>
@@ -59,20 +61,20 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input id="fst-cls-ticket" class="inp-style inp-width" type="number" value="0">
+                    <input id="First-class-ticket" class="inp-style inp-width" type="number" value="0">
                 </div>
                 <div class="plus-minus-btn">
-                    <p> <button id="fst-ticket-plus" class="button">+</button> <button class="button">-</button> </p>
+                    <p> <button onclick="handleTicketListing('First-class', true)" class="button">+</button> <button onclick="handleTicketListing('First-class', false)" class="button">-</button> </p>
                 </div>
             </div>
-            
+
             <div class="input-group f-class">
                 <div>
                     <label for="">Economy ($100)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="Economy-class-ticket" class="inp-style inp-width" type="number" value="0">
                 </div>
                 <div class="plus-minus-btn">
-                    <p> <button class="button">+</button> <button class="button">-</button> </p>
+                    <p> <button onclick="handleTicketListing('Economy-class', true)" class="button">+</button> <button onclick="handleTicketListing('Economy-class', false)" class="button">-</button> </p>
                 </div>
             </div>
             <div class="calculations">
@@ -81,7 +83,7 @@
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$500</p>
+                        <p>$<span id="subtotal">0</span></p>
                     </div>
                 </div>
 
@@ -90,7 +92,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$50</p>
+                        <p>$<span id="vat">0</span></p>
                     </div>
                 </div>
                 <hr>
@@ -99,19 +101,56 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$550</p>
+                        <p>$<span id="total">0</span></p>
                     </div>
                 </div>
             </div>
             <button class="btn-style">Book Now</button>
         </div>
         <script>
-            document.getElementById("fst-ticket-plus").addEventListener("click", function(){
-                const fstClsInput = document.getElementById("fst-cls-ticket");
-                const fstTicketCount = parseInt(fstClsInput.value);
-                const TotalfstTicket = fstTicketCount + 1;
-                fstClsInput.value = TotalfstTicket;
-            })
+            
+            // --- First Class & Economy Class Ticket Listing ---
+            function handleTicketListing(classCatagory, isIncrease) {
+                const ticketInput = document.getElementById(classCatagory + "-ticket");
+                const ticketCount = parseInt(ticketInput.value);
+                let totalTicket = ticketCount;
+                // for increase tickets number
+                if (isIncrease == true) {
+                    totalTicket = ticketCount + 1;
+                }
+                // for decrease ticket number
+                if (isIncrease == false && ticketCount > 0) {
+                    totalTicket = ticketCount - 1;
+                }
+                ticketInput.value = totalTicket;
+                
+                totalTicketPricing();
+            };
+
+            // --- Total Ticket Pricing ---
+            function totalTicketPricing(){
+                const fstClsCount = ticketInputValue("First-class"); /*using return function*/
+                const economyClsCount = ticketInputValue("Economy-class"); /*using return function*/
+
+                // calculate subtotal (including only First class and Economy class ticket price)
+                const subTotal = fstClsCount * 150 + economyClsCount * 100;
+                document.getElementById("subtotal").innerText = subTotal;
+
+                // Calculation of 10% VAT on the subtotal amount. Which will be added also
+                const totalVat = subTotal / 10;
+                document.getElementById("vat").innerText = totalVat;
+
+                // Calculation of Total amount.( adding subtotal and 10% VAT )
+                const totalPrice = subTotal + totalVat;
+                document.getElementById("total").innerText = totalPrice;
+            };
+
+            // --- Return Function ---
+            function ticketInputValue(classCatagory){
+                const ticketInput = document.getElementById(classCatagory + "-ticket");
+                const ticketCount = parseInt(ticketInput.value);
+                return ticketCount;
+            };
         </script>
     </main>
     <link rel="stylesheet" href="js/bootstrap.min.js">
